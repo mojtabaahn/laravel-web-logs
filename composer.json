@@ -1,0 +1,19 @@
+{
+    "name": "mojtabaahn/laravel-web-logs",
+    "description": "Laravel logs available from web",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mojtabaa HN",
+            "email": "mojtabaa.hn@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Mojtabaahn\\LaravelWebLogs\\": "./src"
+        }
+    }
+}
