@@ -1,6 +1,6 @@
 {
     "name": "mojtabaahn/laravel-web-logs",
-    "description": "Laravel logs available from web",
+    "description": "Access Laravel/Lumen logs from web made easy.",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -10,10 +10,19 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "php": "^7.3|^8.0"
+    },
     "autoload": {
         "psr-4": {
             "Mojtabaahn\\LaravelWebLogs\\": "./src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mojtabaahn\\LaravelWebLogs\\Providers\\LaravelWebLogsServiceProvider"
+            ]
         }
     }
 }

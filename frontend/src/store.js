@@ -11,31 +11,37 @@ export default reactive({
     text_links: true,
     search: '',
     open_traces: [],
+    exception_form: {
+        message: '',
+    },
+    message_form: {
+        message: '',
+        level: 'debug'
+    },
+    exception_modal: false,
+    message_modal: false,
     toggle(key) {
         this[key] = !this[key]
     },
-    setup() {
-        this.fetchLogs()
+    async setup() {
+        await this.fetchLogs()
+        await this.fetchLog(this.sorted_logs[0])
     },
     teardown() {
     },
-    fetchLogs() {
+    async fetchLogs() {
         this.loading_logs = true
-        axios.get(`${config.base_url}/web-logs`).then(resp => {
-            setTimeout(() => {
-                this.loading_logs = false
-                this.logs = resp.data
-            }, 500)
+        await axios.get(this.url('/index')).then(resp => {
+            this.loading_logs = false
+            this.logs = resp.data
         })
     },
-    fetchLog(log) {
+    async fetchLog(log) {
         this.current = log
         this.loading_log = true
-        axios.get(`${config.base_url}/web-logs/${log.name}`).then(resp => {
-            setTimeout(() => {
-                this.loading_log = false
-                this.current_content = resp.data
-            }, 500)
+        await axios.get(this.url(`/${log.name}`)).then(resp => {
+            this.loading_log = false
+            this.current_content = resp.data
         })
     },
     applyFilters(text) {
@@ -86,5 +92,35 @@ export default reactive({
             return carry
         }, [])
         return lines
+    },
+    submit_exception() {
+        axios.post(this.url(`/log-exception`), this.exception_form)
+            .then(resp => {
+                console.log(resp.data)
+                this.exception_modal = false
+                this.exception_form.message = ''
+            })
+    },
+    submit_message() {
+        axios.post(this.url(`/log-message`), this.message_form)
+            .then(resp => {
+                console.log(resp.data)
+                this.message_modal = false
+                this.message_form.message = ''
+                this.message_form.level = 'debug'
+            })
+    },
+    async reloadAll() {
+        await this.fetchLogs()
+        this.current !== null && await this.fetchLog(this.current)
+    },
+    url(suffix) {
+        suffix = '/web-logs' + suffix
+
+        if (process.env.NODE_ENV === 'production') {
+            return suffix
+        }
+
+        return config.base_url + suffix
     }
 })

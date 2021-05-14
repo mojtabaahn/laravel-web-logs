@@ -1,9 +1,8 @@
 <?php
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-use Illuminate\Support\Facades\Log;
-
-$router->get('/', \Mojtabaahn\LaravelWebLogs\Http\Controllers\IndexLogsController::class);
-$router->get('debug',\Mojtabaahn\LaravelWebLogs\Http\Controllers\AddLogController::class);
-$router->get('exception',\Mojtabaahn\LaravelWebLogs\Http\Controllers\AddExceptionController::class);
+$router->get('/', \Mojtabaahn\LaravelWebLogs\Http\Controllers\ShowController::class);
+$router->get('index', \Mojtabaahn\LaravelWebLogs\Http\Controllers\IndexLogsController::class);
+$router->post('/log-message',\Mojtabaahn\LaravelWebLogs\Http\Controllers\LogMessageController::class);
+$router->post('/log-exception',\Mojtabaahn\LaravelWebLogs\Http\Controllers\LogExceptionController::class);
 $router->get('/{filename}', \Mojtabaahn\LaravelWebLogs\Http\Controllers\ReadLogController::class);
