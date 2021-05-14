@@ -5,7 +5,7 @@ namespace Mojtabaahn\LaravelWebLogs\Providers;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Routing\Router;
 
-class WebLogsServiceProvider extends ServiceProvider
+class LaravelWebLogsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
