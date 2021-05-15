@@ -37,6 +37,11 @@ return [
 ## Screen Shot
 ![screen shot](https://github.com/mojtabaahn/laravel-web-logs/blob/main/screenshot.jpg?raw=true)
 
+## Future Plans
+- [ ] Add option to auto-append new logs (like `tail -f`)
+- [ ] Lazy-load for more big files
+- [ ] Add guard for accessing routes
+
 
 ## Changelog
 
