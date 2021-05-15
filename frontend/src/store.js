@@ -9,9 +9,10 @@ export default reactive({
     current_content: null,
     loading_log: false,
     text_links: true,
-    auto_reload : false,
+    auto_reload: false,
     search: '',
     open_traces: [],
+    dateComponents: new Set(),
     exception_form: {
         message: '',
     },
@@ -27,6 +28,7 @@ export default reactive({
     async setup() {
         await this.fetchLogs()
         await this.fetchLog(this.sorted_logs[0])
+        this.setupDateInterval()
     },
     teardown() {
     },
@@ -113,7 +115,10 @@ export default reactive({
     },
     async reloadAll() {
         await this.fetchLogs()
-        this.current !== null && await this.fetchLog(this.current)
+        if (this.current !== null) {
+            let name = this.current.name
+            await this.fetchLog(this.logs.filter(log => log.name === name)[0])
+        }
     },
     url(suffix) {
         suffix = '/web-logs' + suffix
@@ -123,5 +128,12 @@ export default reactive({
         }
 
         return config.base_url + suffix
+    },
+    setupDateInterval() {
+        setInterval(() => {
+            for (const comp of this.dateComponents) {
+                comp.$forceUpdate();
+            }
+        }, 5 * 1000);
     }
 })

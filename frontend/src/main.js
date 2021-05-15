@@ -27,18 +27,20 @@ app.config.globalProperties.unixToDiff = (timestamp) => {
 
     let elapsed = (new Date).getTime() - timestamp * 1000
 
-    if (elapsed < msPerMinute) {
+    if (elapsed === 0) {
+        return 'now';
+    } else if (elapsed < msPerMinute) {
         return Math.round(elapsed / 1000) + ' seconds ago';
     } else if (elapsed < msPerHour) {
         return Math.round(elapsed / msPerMinute) + ' minutes ago';
     } else if (elapsed < msPerDay) {
         return Math.round(elapsed / msPerHour) + ' hours ago';
     } else if (elapsed < msPerMonth) {
-        return  Math.round(elapsed / msPerDay) + ' days ago';
+        return Math.round(elapsed / msPerDay) + ' days ago';
     } else if (elapsed < msPerYear) {
-        return  Math.round(elapsed / msPerMonth) + ' months ago';
+        return Math.round(elapsed / msPerMonth) + ' months ago';
     } else {
-        return  Math.round(elapsed / msPerYear) + ' years ago';
+        return Math.round(elapsed / msPerYear) + ' years ago';
     }
 }
 app.config.globalProperties.unixToString = UNIX_timestamp => {
