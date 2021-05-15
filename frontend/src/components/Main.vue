@@ -23,6 +23,7 @@
                     </div>
                     <div class="flex space-x-2 items-center">
                         <text-filter label="Links" :enabled="store.text_links" @click="store.toggle('text_links')"/>
+                        <!--<text-filter label="Auto-Reload" :enabled="store.auto_reload" @click="store.toggle('auto_reload')"/>-->
                         <button
                             @click.prevent="store.fetchLog(store.current)"
                             title="refresh"
@@ -79,9 +80,10 @@ export default defineComponent({
 })
 </script>
 <style>
-.with-links a span{
+.with-links a span {
     @apply text-blue-700
 }
+
 .with-links a {
     @apply font-bold text-blue-700 cursor:text-blue-900;
 }

@@ -9,6 +9,7 @@ export default reactive({
     current_content: null,
     loading_log: false,
     text_links: true,
+    auto_reload : false,
     search: '',
     open_traces: [],
     exception_form: {

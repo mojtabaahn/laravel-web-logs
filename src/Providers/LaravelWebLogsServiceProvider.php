@@ -9,6 +9,10 @@ class LaravelWebLogsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        $this->publishes([
+            __DIR__ . '/../../config/web-logs.php' => base_path('config/web-logs.php'),
+        ], 'config');
+
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../../public' => base_path('public/vendor/web-logs'),
@@ -18,6 +22,8 @@ class LaravelWebLogsServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__ . '/../../config/web-logs.php', 'web-logs');
+
         /** @var Router $router */
         $router = $this->app->router;
 
