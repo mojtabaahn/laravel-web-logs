@@ -7,6 +7,9 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/mojtabaahn/laravel-web-logs?style=for-the-badge)
 ![Packagist Downloads](https://img.shields.io/packagist/dt/mojtabaahn/laravel-web-logs?style=for-the-badge)
 
+## Live Preview
+Visit [Here](http://web-logs.snowthen.ir/) to preview online playground.
+
 ## Installation
 
 You can install the package via composer:
