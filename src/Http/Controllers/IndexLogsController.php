@@ -9,12 +9,14 @@ class IndexLogsController
 {
     public function __invoke()
     {
-        return collect(File::files(base_path('storage/logs')))->map(fn(SplFileInfo $fileInfo) => [
-            'name' => $fileInfo->getFilename(),
-            'size' => $fileInfo->getSize(),
-            'modified_at' => $fileInfo->getMTime(),
-            'created_at' => $fileInfo->getCTime(),
-        ])->toArray();
+        return collect(File::files(base_path('storage/logs')))->map(function (SplFileInfo $fileInfo) {
+            return [
+                'name' => $fileInfo->getFilename(),
+                'size' => $fileInfo->getSize(),
+                'modified_at' => $fileInfo->getMTime(),
+                'created_at' => $fileInfo->getCTime(),
+            ];
+        })->toArray();
     }
 
 }

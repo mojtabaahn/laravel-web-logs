@@ -22,6 +22,7 @@ class LaravelWebLogsServiceProvider extends ServiceProvider
 
     public function register()
     {
+
         $this->mergeConfigFrom(__DIR__ . '/../../config/web-logs.php', 'web-logs');
 
         /** @var Router $router */
