@@ -21,10 +21,13 @@ class ReadLastLines
             $end = $offset;
         }
         $start = max($end - $length, 0);
-
         try {
-            $lines = new LimitIterator($file, $start, $length);
-            $arr = iterator_to_array($lines);
+            if ($start === $end) {
+                $arr = [];
+            } else {
+                $lines = new LimitIterator($file, $start, $length);
+                $arr = iterator_to_array($lines);
+            }
         } catch (OutOfBoundsException $exception) {
             $arr = [];
         }
