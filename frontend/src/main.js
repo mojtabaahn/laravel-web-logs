@@ -5,14 +5,17 @@ import "boxicons/css/boxicons.min.css"
 import axios from 'axios'
 import store from './store'
 import config from "./config";
+import __ from 'lodash'
 
 window.axios = axios
+window.__ = __
 store.setup()
 
 let app = createApp(App)
 
 app.config.globalProperties.store = store
 app.config.globalProperties.config = config
+app.config.globalProperties.__ = __
 app.config.globalProperties.filesize = size => {
     let i = size === 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024));
     return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];

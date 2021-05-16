@@ -12,7 +12,7 @@
                     v-for="log in store.sorted_logs"
                     class="py-4 text-left w-full cursor:text-blue-600"
                     :class="{'text-blue-600' : store.current?.name === log.name}"
-                    @click.prevent="store.fetchLog(log)"
+                    @click.prevent="store.openLog(log)"
                 >
                     <div class="font-bold">{{ log.name }}</div>
                     <div class="text-sm text-gray-500 font-bold">Modified

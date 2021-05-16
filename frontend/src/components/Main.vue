@@ -1,43 +1,50 @@
 <template>
     <div style="width: calc(100% - 20rem - 4rem);" class="h-full">
-        <div class="overflow-auto relative" style="height:calc(100%)">
+        <infinite-scroll @scroll-to-end="!store.is_end && store.fetchLogNextPage()" class="overflow-auto relative" style="height:calc(100%)">
             <div v-if="store.current === null" class="flex items-center justify-center w-full h-full">
                 <div class="text-gray-300 text-4xl font-light">Select a log..</div>
             </div>
-            <div v-else-if="store.loading_log" class="absolute inset-0 w-full h-full flex items-center justify-center">
-                <Loading/>
-            </div>
-            <template v-else>
-                <div class="p-5 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-white">
-                    <div>
-                        <div class="text-lg font-bold">{{ store.current.name }}</div>
-                        <div class="flex space-x-5 text-sm font-bold text-gray-500 py-1">
-                            <div>Created
-                                <date :timestamp="store.current.created_at"/>
+            <div v-else>
+                <div class=" sticky top-0 bg-white">
+                    <div class="p-5 border-b border-gray-200 flex justify-between items-center">
+                        <div>
+                            <div class="text-lg font-bold">{{ store.current.name }}</div>
+                            <div class="flex space-x-5 text-sm font-bold text-gray-500 py-1">
+                                <div>Created
+                                    <date :timestamp="store.current.created_at"/>
+                                </div>
+                                <div>Modified
+                                    <date :timestamp="store.current.modified_at"/>
+                                </div>
+                                <div>Size: {{ filesize(store.current.size) }}</div>
                             </div>
-                            <div>Modified
-                                <date :timestamp="store.current.modified_at"/>
-                            </div>
-                            <div>Size: {{ filesize(store.current.size) }}</div>
                         </div>
-                    </div>
-                    <div class="flex space-x-2 items-center">
-                        <text-filter label="Links" :enabled="store.text_links" @click="store.toggle('text_links')"/>
-                        <!--<text-filter label="Auto-Reload" :enabled="store.auto_reload" @click="store.toggle('auto_reload')"/>-->
-                        <button
-                            @click.prevent="store.fetchLog(store.current)"
-                            title="refresh"
-                            class="w-8 h-8 border border-gray-300 shadow rounded-lg ml-2 text-gray-700 cursor:bg-blue-50 cursor:border-blue-600 cursor:text-blue-600 flex items-center justify-center"
-                        >
-                            <i class="bx bx-refresh text-2xl"></i>
-                        </button>
+                        <div class="flex space-x-2 space-x-reverse items-center flex-row-reverse">
+                            <!--<text-filter label="Links" :enabled="store.text_links" @click="store.toggle('text_links')"/>-->
+                            <!--<text-filter label="Auto-Reload" :enabled="store.auto_reload" @click="store.toggle('auto_reload')"/>-->
+                            <button
+                                @click.prevent="store.refreshLog()"
+                                title="refresh"
+                                class="w-8 h-8 form-button flex items-center justify-center"
+                            >
+                                <i class="bx bx-refresh text-2xl"></i>
+                            </button>
+
+
+                            <filter-env/>
+                            <filter-level/>
+
+                            <input v-model="store.filter" type="text" class="form-input" placeholder="Filter Logs..">
+
+                        </div>
                     </div>
                 </div>
                 <div class="p-5 divide-y divide-dashed divide-gray-200">
                     <div v-for="(line,offset) in store.sorted_content" class="py-4">
-                        <div class="font-bold text-sm inline-flex space-x-2 mb">
+                        <div class="font-bold text-sm inline-flex space-x-4 mb">
                             <div class="px-2 py-1  border rounded-lg" :class="levelClass(line.level)">{{ line.level }}</div>
-                            <date class="px-2 py-1 text-gray-700" :timestamp="line.time" :parse="true"/>
+                            <div class="py-1 text-gray-700 capitalize">{{line.env}}</div>
+                            <date class="py-1 text-gray-700" :timestamp="line.time" :parse="true"/>
                         </div>
                         <div class="whitespace-pre-wrap font-mono with-links leading-6 py-4" v-html="store.applyFilters(line.content)"></div>
                         <template v-if="line.trace !== ''">
@@ -53,9 +60,21 @@
                             </div>
                         </template>
                     </div>
+                    <div v-if="store.is_end" class="w-full h-[50vh] flex items-center justify-center">
+                        <div class="uppercase text-xl font-light text-gray-600">End Of File</div>
+                    </div>
+                    <div v-else-if="store.loading_log" class="w-full h-[50vh] flex items-center justify-center">
+                        <Loading/>
+                    </div>
+                    <div v-if="store.sorted_content.length === 0" class="w-full h-[50vh] flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="uppercase text-xl font-bold text-gray-600">Such An Empty</div>
+                            <div class="text-gray-400 mt-2"> try removing filters</div>
+                        </div>
+                    </div>
                 </div>
-            </template>
-        </div>
+            </div>
+        </infinite-scroll>
     </div>
 </template>
 <script>
@@ -64,9 +83,13 @@ import Loading from "./Loading";
 import linkifyStr from 'linkifyjs/string';
 import TextFilter from "./TextFilter";
 import Date from "./Date";
+import InfiniteScroll from "./InfiniteScroll";
+import Popper from "./Popper";
+import FilterEnv from "./FilterEnv";
+import FilterLevel from "./FilterLevel";
 
 export default defineComponent({
-    components: {Date, TextFilter, Loading},
+    components: {FilterLevel, FilterEnv, Popper, InfiniteScroll, Date, TextFilter, Loading},
     methods: {
         levelClass(level) {
             let isError = level.includes('EMERGENCY') | level.includes('ALERT') | level.includes('CRITICAL') | level.includes('ERROR');

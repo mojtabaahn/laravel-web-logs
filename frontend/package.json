@@ -7,11 +7,14 @@
         "build": "vue-cli-service build"
     },
     "dependencies": {
+        "@popperjs/core": "^2.9.2",
         "@tailwindcss/jit": "^0.1.18",
+        "@vueuse/core": "^4.11.0",
         "axios": "^0.21.1",
         "boxicons": "^2.0.7",
         "core-js": "^3.6.5",
         "linkifyjs": "^3.0.0-beta.3",
+        "lodash": "^4.17.21",
         "postcss": "^8.2.15",
         "tailwindcss": "^2.1.2",
         "utf8": "^3.0.0",

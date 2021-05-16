@@ -1,18 +1,27 @@
 import {reactive} from 'vue'
 import config from "./config";
 import linkifyStr from "linkifyjs/string";
+import {useLocalStorage} from "@vueuse/core";
 
 export default reactive({
     logs: [],
     loading_logs: false,
+    current_name: useLocalStorage('current_name', ''),
     current: null,
     current_content: null,
     loading_log: false,
-    text_links: true,
+    is_end: false,
+    text_links: useLocalStorage('text_links', true),
     auto_reload: false,
     search: '',
     open_traces: [],
     dateComponents: new Set(),
+    offset: null,
+    filter: useLocalStorage('filter', ''),
+    filter_envs: useLocalStorage('filter_envs', []),
+    filter_levels: useLocalStorage('filter_levels', []),
+    envs: ['production', 'staging', 'local'],
+    levels: ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'],
     exception_form: {
         message: '',
     },
@@ -25,9 +34,22 @@ export default reactive({
     toggle(key) {
         this[key] = !this[key]
     },
+    env_is_checked(key) {
+        return this.filter_envs.includes(key)
+    },
+    toggle_env(key) {
+        this.toggleArray(key, this.filter_envs)
+    },
+    level_is_checked(key) {
+        return this.filter_levels.includes(key)
+    },
+    toggle_level(key) {
+        this.toggleArray(key, this.filter_levels)
+    },
     async setup() {
         await this.fetchLogs()
-        await this.fetchLog(this.sorted_logs[0])
+        let log = this.current_name === '' ? this.sorted_logs[0] : this.logs.filter(log => log.name === this.current_name)[0]
+        await this.openLog(log)
         this.setupDateInterval()
     },
     teardown() {
@@ -39,13 +61,29 @@ export default reactive({
             this.logs = resp.data
         })
     },
-    async fetchLog(log) {
+    async openLog(log) {
+        this.current_name = log.name
+        this.offset = null
         this.current = log
+        this.current_content = []
+        this.is_end = false
+        await this.fetchLogNextPage()
+    },
+    async fetchLogNextPage() {
         this.loading_log = true
-        await axios.get(this.url(`/${log.name}`)).then(resp => {
+        let log = this.current
+        await axios.get(this.url(`/${log.name}?${this.offset === null ? '' : 'offset=' + this.offset}`)).then(resp => {
             this.loading_log = false
-            this.current_content = resp.data
+            this.current_content = this.current_content.concat(resp.data.data)
+            this.offset = resp.data.new_offset
+            this.loading_log = false
+            if (resp.data.data.length === 0) {
+                this.is_end = true
+            }
         })
+    },
+    async refreshLog() {
+        await this.openLog(this.current)
     },
     applyFilters(text) {
 
@@ -67,11 +105,14 @@ export default reactive({
     },
     toggleTrace(offset) {
         let key = this.current.name + ':' + offset
-        let index = this.open_traces.indexOf(key)
+        this.toggleArray(key, this.open_traces)
+    },
+    toggleArray(key, array) {
+        let index = array.indexOf(key)
         if (index === -1) {
-            this.open_traces.push(key)
+            array.push(key)
         } else {
-            this.open_traces.splice(key, 1)
+            array.splice(index, 1)
         }
     },
     traceIsOpen(offset) {
@@ -79,6 +120,19 @@ export default reactive({
     },
     get sorted_content() {
         return this.current_content.slice().reverse()
+            .filter(line => line.content.includes(this.filter))
+            .filter(line => {
+                if (this.filter_levels.length === 0) {
+                    return true
+                }
+                return this.filter_levels.includes(line.level.toLowerCase());
+            })
+            .filter(line => {
+                if (this.filter_envs.length === 0) {
+                    return true
+                }
+                return this.filter_envs.includes(line.env.toLowerCase());
+            })
     },
     traceToArray(str) {
         let temp = null
@@ -117,7 +171,7 @@ export default reactive({
         await this.fetchLogs()
         if (this.current !== null) {
             let name = this.current.name
-            await this.fetchLog(this.logs.filter(log => log.name === name)[0])
+            await this.openLog(this.logs.filter(log => log.name === name)[0])
         }
     },
     url(suffix) {
