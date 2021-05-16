@@ -19,11 +19,7 @@ class ReadLogController
             return response()->json(['message' => 'File not found'], 404);
         }
 
-        $chunk = $readLines(
-            filename: $path,
-            length: $length,
-            offset: $offset
-        );
+        $chunk = $readLines($path, $length, $offset);
 
         $contents = $chunk['lines'];
         $newOffset = $chunk['start'];
