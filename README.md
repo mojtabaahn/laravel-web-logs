@@ -8,7 +8,7 @@
 ![Packagist Downloads](https://img.shields.io/packagist/dt/mojtabaahn/laravel-web-logs?style=for-the-badge)
 
 ## Live Preview
-Visit [Here](http://web-logs.snowthen.ir/web-logs) to preview online playground.
+Visit [Here](https://web-logs.snowthen.ir/web-logs) to preview online playground.
 
 ## Installation
 
