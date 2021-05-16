@@ -25,7 +25,7 @@ class ReadLastLines
         try {
             $lines = new LimitIterator($file, $start, $length);
             $arr = iterator_to_array($lines);
-        } catch (OutOfBoundsException) {
+        } catch (OutOfBoundsException $exception) {
             $arr = [];
         }
 
