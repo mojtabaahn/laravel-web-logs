@@ -8,7 +8,7 @@ export default reactive({
     loading_logs: false,
     current_name: useLocalStorage('current_name', ''),
     current: null,
-    current_content: null,
+    current_content: [],
     loading_log: false,
     is_end: false,
     text_links: useLocalStorage('text_links', true),
