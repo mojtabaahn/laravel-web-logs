@@ -42,7 +42,7 @@ return [
 
 ## Future Plans
 - [ ] Add option to auto-append new logs (like `tail -f`)
-- [ ] Lazy-load for more big files
+- [x] Lazy-load/Infinite-scroll for more big files
 - [ ] Add guard for accessing routes
 
 
