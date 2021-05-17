@@ -2,8 +2,10 @@
 
 namespace Mojtabaahn\LaravelWebLogs\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Routing\Router;
+use Mojtabaahn\LaravelWebLogs\Http\Middlewares\Authorize;
 
 class LaravelWebLogsServiceProvider extends ServiceProvider
 {
@@ -28,10 +30,15 @@ class LaravelWebLogsServiceProvider extends ServiceProvider
         /** @var Router $router */
         $router = $this->app->router;
 
-        $router->group(['prefix' => 'web-logs'], function () use (&$router) {
+        $router->group(['prefix' => 'web-logs', 'middleware' => Authorize::class], function () use (&$router) {
             return include __DIR__ . "/../../routes/api.php";
         });
 
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'web-logs');
+
+        Gate::define('viewWebLogs', function ($user = null) {
+            return true;
+        });
+
     }
 }

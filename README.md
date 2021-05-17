@@ -33,7 +33,8 @@ This is the contents of the published config file:
 
 ```php
 return [
-    'max_read_lines' => env('WEB_LOGS_MAX_READ_LINES', 10000)
+    'enabled' => env('APP_DEBUG', true),
+    'lines_per_page' => env('WEB_LOGS_LINES_PER_PAGE', 1000)
 ];
 ```
 
@@ -42,8 +43,8 @@ return [
 
 ## Future Plans
 - [ ] Add option to auto-append new logs (like `tail -f`)
-- [x] Lazy-load/Infinite-scroll for more big files
-- [ ] Add guard for accessing routes
+- [x] Lazy-load/Infinite-scroll for big files
+- [x] Add guard for accessing routes
 
 
 ## Changelog

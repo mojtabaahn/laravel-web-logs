@@ -13,7 +13,7 @@ class ReadLogController
     {
         $offset = $request->exists('offset') ? (int)$request->input('offset') : null;
         $path = base_path('storage/logs/' . $filename);
-        $length = config('web-logs.max_read_lines');
+        $length = config('web-logs.lines_per_page');
 
         if (File::missing($path)) {
             return response()->json(['message' => 'File not found'], 404);
