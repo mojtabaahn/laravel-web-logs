@@ -63,14 +63,14 @@
                     <div v-if="store.loading_log" class="w-full h-[50vh] flex items-center justify-center">
                         <Loading/>
                     </div>
-                    <div v-else-if="store.is_end" class="w-full h-[50vh] flex items-center justify-center">
-                        <div class="uppercase text-xl font-light text-gray-600">End Of File</div>
-                    </div>
-                    <div v-if="store.sorted_content.length === 0" class="w-full h-[50vh] flex items-center justify-center">
+                    <div v-else-if="store.sorted_content.length === 0" class="w-full h-[50vh] flex items-center justify-center">
                         <div class="text-center">
                             <div class="uppercase text-xl font-bold text-gray-600">Such An Empty</div>
                             <div class="text-gray-400 mt-2"> try removing filters</div>
                         </div>
+                    </div>
+                    <div v-else-if="store.is_end" class="w-full h-[50vh] flex items-center justify-center">
+                        <div class="uppercase text-xl font-light text-gray-600">End Of File</div>
                     </div>
                 </div>
             </div>
