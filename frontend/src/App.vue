@@ -7,6 +7,7 @@
             <Main/>
             <log-message-modal/>
             <log-exception-modal/>
+            <setting-modal/>
         </div>
     </div>
 </template>
@@ -17,10 +18,12 @@ import Main from "./components/Main";
 import Nav from "./components/Nav";
 import LogMessageModal from "./components/LogMessageModal";
 import LogExceptionModal from "./components/LogExceptionModal";
+import SettingModal from "./components/SettingModal";
 
 export default {
     name: 'App',
     components: {
+        SettingModal,
         LogExceptionModal,
         LogMessageModal,
         Nav,

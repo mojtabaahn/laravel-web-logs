@@ -29,6 +29,7 @@ export default reactive({
         message: '',
         level: 'debug'
     },
+    setting_modal: false,
     exception_modal: false,
     message_modal: false,
     toggle(key) {
