@@ -11,12 +11,15 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "8.0|^7.4"
+        "php": "^8.0|^7.4"
     },
     "autoload": {
         "psr-4": {
             "Mojtabaahn\\LaravelWebLogs\\": "./src"
-        }
+        },
+        "files": [
+            "./src/helpers.php"
+        ]
     },
     "extra": {
         "laravel": {

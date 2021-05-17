@@ -25,6 +25,7 @@
         "@vue/cli-plugin-router": "^5.0.0-alpha.5",
         "@vue/cli-service": "^5.0.0-alpha.5",
         "sass": "^1.26.5",
-        "sass-loader": "^8.0.2"
+        "sass-loader": "^8.0.2",
+        "webpack-assets-manifest": "^4.0.6"
     }
 }
