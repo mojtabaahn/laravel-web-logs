@@ -9,7 +9,7 @@
                     <div class="p-5 border-b border-gray-200 grid lg:grid-cols-2 flex-wrap justify-between items-center">
                         <div>
                             <div class="text-lg font-bold">{{ store.current.name }}</div>
-                            <div class="grid grid-cols-2 lg:flex lg:space-x-5 text-sm font-bold text-gray-500 py-1">
+                            <div class="hidden lg:grid grid-cols-2 lg:flex lg:space-x-5 text-sm font-bold text-gray-500 py-1">
                                 <div>Created
                                     <date :timestamp="store.current.created_at"/>
                                 </div>
