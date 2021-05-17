@@ -7,6 +7,10 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/mojtabaahn/laravel-web-logs?style=for-the-badge)
 ![Packagist Downloads](https://img.shields.io/packagist/dt/mojtabaahn/laravel-web-logs?style=for-the-badge)
 
+## Disclaimer
+This package is not by any means any replacement for error tracking softwares such as [Sentry](https://sentry.io/) and [Bugsnag](https://www.bugsnag.com/) or debugging tools like [Ray](https://myray.app/) or [Xdebug](https://xdebug.org/).
+It is simply web channel for laravel/lumen file-based logs.
+
 ## Live Preview
 Visit [Here](https://web-logs.snowthen.ir/web-logs) to preview online playground.
 
