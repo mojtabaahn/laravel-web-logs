@@ -29,6 +29,7 @@ export default reactive({
         message: '',
         level: 'debug'
     },
+    aside : true,
     setting_modal: false,
     exception_modal: false,
     message_modal: false,
@@ -63,6 +64,9 @@ export default reactive({
         })
     },
     async openLog(log) {
+        if(window.innerWidth < 1024){
+            this.aside = false
+        }
         this.current_name = log.name
         this.offset = null
         this.current = log

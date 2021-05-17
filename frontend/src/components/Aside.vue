@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[20rem] border-r border-gray-200 h-full relative overflow-auto">
+    <div :class="store.aside ? 'flex-grow lg:flex-shrink-0 lg:w-[20rem] lg:flex-grow-0' : 'hidden'" class="border-r border-gray-200 h-full relative overflow-auto">
         <div v-if="store.loading_logs" class="absolute inset-0 w-full h-full flex items-center justify-center">
             <Loading/>
         </div>

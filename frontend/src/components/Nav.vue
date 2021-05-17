@@ -1,7 +1,8 @@
 <template>
-    <div class="w-[4rem] border-r border-gray-200 h-full flex flex-col items-center py-6 space-y-6">
+    <div class="flex-shrink-0 w-[4rem] border-r border-gray-200 h-full flex flex-col items-center py-6 space-y-6">
         <img src="./../assets/logo.png" alt="" class="w-[2rem]">
         <div class="h-[0] border-b-2 border-gray-200 w-[2rem]"></div>
+        <button @click="store.toggle('aside')" :class="store.aside ? 'text-blue-700' : 'text-gray-700'" title="Toggle Aside"><i class="bx bx-menu text-3xl"></i></button>
         <button @click="store.reloadAll" class="text-gray-700  cursor:text-blue-600" title="Reload"><i class="bx bx-refresh text-3xl"></i></button>
         <button @click="store.toggle('message_modal')" class="text-gray-700  cursor:text-blue-600" title="Trigger A Message"><i class="bx bx-send text-3xl"></i></button>
         <button @click="store.toggle('exception_modal')" class="text-gray-700  cursor:text-blue-600" title="Trigger An Exception"><i class="bx bx-bug-alt text-3xl"></i></button>

@@ -3,7 +3,7 @@
         <div class="h-[0rem] border-gray-200"></div>
         <div class="flex" style="height: calc(100% - 0rem)">
             <Nav/>
-            <Aside/>
+            <Aside />
             <Main/>
             <log-message-modal/>
             <log-exception-modal/>
