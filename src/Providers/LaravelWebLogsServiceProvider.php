@@ -30,7 +30,10 @@ class LaravelWebLogsServiceProvider extends ServiceProvider
         /** @var Router $router */
         $router = $this->app->router;
 
-        $router->group(['prefix' => 'web-logs', 'middleware' => Authorize::class], function () use (&$router) {
+        $router->group([
+            'prefix' =>  config('web-logs.path'),
+            'middleware' => Authorize::class
+        ], function () use (&$router) {
             return include __DIR__ . "/../../routes/api.php";
         });
 
