@@ -14,6 +14,6 @@ return [
     |
     */
     'path' => 'web-logs',
-    'enabled' => env('APP_DEBUG', true),
+    'enabled' => env('WEB_LOGS_ENABLED', true),
     'lines_per_page' => env('WEB_LOGS_LINES_PER_PAGE', 1000)
 ];
