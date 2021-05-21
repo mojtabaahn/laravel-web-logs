@@ -8,8 +8,8 @@
 ![Packagist Downloads](https://img.shields.io/packagist/dt/mojtabaahn/laravel-web-logs?style=for-the-badge)
 
 ## Disclaimer
-This package is not by any means any replacement for error tracking softwares such as [Sentry](https://sentry.io/) and [Bugsnag](https://www.bugsnag.com/) or debugging tools like [Ray](https://myray.app/) or [Xdebug](https://xdebug.org/).
-It is simply web channel for laravel/lumen file-based logs.
+This package is not by any means a replacement for error tracking software such as [Sentry](https://sentry.io/) and [Bugsnag](https://www.bugsnag.com/) or debugging tools like [Ray](https://myray.app/) and [Xdebug](https://xdebug.org/).
+It is simply web interface for laravel/lumen file-based logs.
 
 ## Live Preview
 Visit [Here](https://web-logs.snowthen.ir/web-logs) to preview online playground.
@@ -37,7 +37,44 @@ This is the contents of the published config file:
 
 ```php
 return [
-    'enabled' => env('APP_DEBUG', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard Enabled
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify either dashboard is enabled or not
+    |
+    */
+
+    'enabled' => env('WEB_LOGS_ENABLED', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard Path
+    |--------------------------------------------------------------------------
+    |
+    | This is the URI path where Laravel Web Logs will be accessible from.
+    | Feel free to change this path to anything you like.
+    |
+    | Note that the URI will not affect the paths of its internal API that
+    | aren't exposed to users.
+    |
+    */
+
+    'path' => 'web-logs',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Lines Per Page
+    |--------------------------------------------------------------------------
+    |
+    | On each request from dashboard to it's back-end how many lines should
+    | it read of specified log file. Setting this option to a big number
+    | may reduce dashboard performance!
+    |
+    */
+
     'lines_per_page' => env('WEB_LOGS_LINES_PER_PAGE', 1000)
 ];
 ```
@@ -46,7 +83,7 @@ return [
 ![screen shot](https://github.com/mojtabaahn/laravel-web-logs/blob/main/screenshot.jpg?raw=true)
 
 ## Future Plans
-- [ ] Add option to auto-append new logs (like `tail -f`)
+- [x] Add option to auto-append new logs (like `tail -f`)
 - [x] Lazy-load/Infinite-scroll for big files
 - [x] Add guard for accessing routes
 
