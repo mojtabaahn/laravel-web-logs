@@ -28,6 +28,10 @@ export default defineComponent({
     @apply rounded-lg border border-gray-200 cursor:ring-blue-300 cursor:ring-2 cursor:border-blue-600 p-3 w-full
 }
 
+.form-input:disabled {
+    @apply bg-gray-100
+}
+
 .form-input {
     @apply rounded-lg border border-gray-200 cursor:ring-blue-300 cursor:ring-2 cursor:border-blue-600 px-3 py-1
 }

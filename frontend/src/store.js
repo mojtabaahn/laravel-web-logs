@@ -1,9 +1,11 @@
-import {reactive} from 'vue'
+import {reactive, watch} from 'vue'
 import config from "./config";
 import linkifyStr from "linkifyjs/string";
 import {useLocalStorage} from "@vueuse/core";
 
 export default reactive({
+    intervals: {},
+    pull_interval: useLocalStorage('pull_interval', 1000),
     logs: [],
     loading_logs: false,
     current_name: useLocalStorage('current_name', ''),
@@ -16,7 +18,8 @@ export default reactive({
     search: '',
     open_traces: [],
     dateComponents: new Set(),
-    offset: null,
+    start: null,
+    end: null,
     filter: useLocalStorage('filter', ''),
     filter_envs: useLocalStorage('filter_envs', []),
     filter_levels: useLocalStorage('filter_levels', []),
@@ -29,7 +32,7 @@ export default reactive({
         message: '',
         level: 'debug'
     },
-    aside : true,
+    aside: true,
     setting_modal: false,
     exception_modal: false,
     message_modal: false,
@@ -53,6 +56,28 @@ export default reactive({
         let log = this.current_name === '' ? this.sorted_logs[0] : this.logs.filter(log => log.name === this.current_name)[0]
         await this.openLog(log)
         this.setupDateInterval()
+        this.setupPullInterval()
+    },
+    setupPullInterval() {
+        watch(() => this.pull_interval, pull_interval => {
+            clearInterval(this.intervals.pull)
+            this.intervals.pull = setInterval(async () => {
+                await this.pullLog()
+            }, this.pull_interval)
+        }, {immediate: true})
+    },
+    async pullLog() {
+        if (this.current_name === null)
+            return
+
+        if (this.pull_interval === false)
+            return
+
+        await axios.get(this.url(`/${this.current_name}?offset=${this.end}&backward=false`)).then(resp => {
+            this.current_content = this.current_content.concat(resp.data.data)
+            console.log(resp.data)
+            this.end = resp.data.end
+        })
     },
     teardown() {
     },
@@ -64,11 +89,12 @@ export default reactive({
         })
     },
     async openLog(log) {
-        if(window.innerWidth < 1024){
+        if (window.innerWidth < 1024) {
             this.aside = false
         }
         this.current_name = log.name
-        this.offset = null
+        this.start = null
+        this.end = null
         this.current = log
         this.current_content = []
         this.is_end = false
@@ -77,10 +103,11 @@ export default reactive({
     async fetchLogNextPage() {
         this.loading_log = true
         let log = this.current
-        await axios.get(this.url(`/${log.name}?${this.offset === null ? '' : 'offset=' + this.offset}`)).then(resp => {
+        await axios.get(this.url(`/${log.name}?${this.start === null ? '' : 'offset=' + this.start}`)).then(resp => {
             this.loading_log = false
             this.current_content = this.current_content.concat(resp.data.data)
-            this.offset = resp.data.new_offset
+            this.start = Math.min(this.start, resp.data.new_offset)
+            this.end = Math.max(this.end, resp.data.end)
             this.loading_log = false
             if (resp.data.data.length === 0) {
                 this.is_end = true
@@ -108,8 +135,8 @@ export default reactive({
     get sorted_logs() {
         return this.logs.sort((a, b) => b.modified_at - a.modified_at).filter(log => log.name.includes(this.search))
     },
-    toggleTrace(offset) {
-        let key = this.current.name + ':' + offset
+    toggleTrace(index) {
+        let key = this.current.name + ':' + index
         this.toggleArray(key, this.open_traces)
     },
     toggleArray(key, array) {
@@ -120,8 +147,8 @@ export default reactive({
             array.splice(index, 1)
         }
     },
-    traceIsOpen(offset) {
-        return this.open_traces.includes(this.current.name + ':' + offset)
+    traceIsOpen(index) {
+        return this.open_traces.includes(this.current.name + ':' + index)
     },
     get sorted_content() {
         return this.current_content.slice().reverse()
