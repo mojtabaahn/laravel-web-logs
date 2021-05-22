@@ -79,6 +79,21 @@ return [
 ];
 ```
 
+## Authorization
+
+Web Logs is enabled by default for all users and guests. In case you want to authorize users before accessing it you must register a `viewWebLogs` ability. A good place to do this is in the `AuthServiceProvider` that ships with Laravel.
+
+```php
+public function boot()
+{
+    $this->registerPolicies();
+
+    Gate::define('viewWebLogs', function ($user = null) {
+        // return true if access to web logs is allowed
+    });
+}
+```
+
 ## Screen Shot
 ![screen shot](https://github.com/mojtabaahn/laravel-web-logs/blob/main/screenshot.jpg?raw=true)
 
