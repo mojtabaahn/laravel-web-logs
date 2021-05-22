@@ -86,6 +86,7 @@ return [
 - [x] Add option to auto-append new logs (like `tail -f`)
 - [x] Lazy-load/Infinite-scroll for big files
 - [x] Add guard for accessing routes
+- [ ] Move stores to [Pinia](https://pinia.esm.dev/)
 
 
 ## Changelog
