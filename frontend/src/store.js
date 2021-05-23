@@ -5,7 +5,8 @@ import {useLocalStorage} from "@vueuse/core";
 
 export default reactive({
     intervals: {},
-    pull_interval: useLocalStorage('pull_interval', 1000),
+    is_pulling: false,
+    pull_interval: useLocalStorage('pull_interval', config.default_pulling_interval),
     logs: [],
     loading_logs: false,
     current_name: useLocalStorage('current_name', ''),
@@ -61,22 +62,29 @@ export default reactive({
     setupPullInterval() {
         watch(() => this.pull_interval, pull_interval => {
             clearInterval(this.intervals.pull)
+
+            if (pull_interval === 0)
+                return
+
             this.intervals.pull = setInterval(async () => {
                 await this.pullLog()
-            }, this.pull_interval)
+            }, pull_interval)
         }, {immediate: true})
     },
     async pullLog() {
         if (this.current_name === null)
             return
 
-        if (this.pull_interval === false)
+        if (this.is_pulling)
             return
 
+        this.is_pulling = true
         await axios.get(this.url(`/${this.current_name}?offset=${this.end}&backward=false`)).then(resp => {
             this.current_content = this.current_content.concat(resp.data.data)
             console.log(resp.data)
             this.end = resp.data.end
+        }).finally(() => {
+            this.is_pulling = false
         })
     },
     teardown() {
@@ -207,12 +215,6 @@ export default reactive({
         }
     },
     url(suffix) {
-        suffix = '/web-logs' + suffix
-
-        if (process.env.NODE_ENV === 'production') {
-            return suffix
-        }
-
         return config.base_url + suffix
     },
     setupDateInterval() {
@@ -220,6 +222,6 @@ export default reactive({
             for (const comp of this.dateComponents) {
                 comp.$forceUpdate();
             }
-        }, 5 * 1000);
+        }, config.relative_dates_refresh_interval);
     }
 })

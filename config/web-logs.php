@@ -1,5 +1,7 @@
 <?php
 
+use Mojtabaahn\LaravelWebLogs\Http\Middlewares\Authorize;
+
 return [
 
     /*
@@ -15,18 +17,26 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Dashboard Path
+    | Route Group Attributes
     |--------------------------------------------------------------------------
     |
-    | This is the URI path where Laravel Web Logs will be accessible from.
-    | Feel free to change this path to anything you like.
+    | This is the array configuring package route attributes. feel free
+    | to edit route prefixes, middlewares and anything else.
     |
-    | Note that the URI will not affect the paths of its internal API that
-    | aren't exposed to users.
+    | In case you want to add authorization using default auth driver,
+    | uncomment web middleware.
     |
     */
 
-    'path' => 'web-logs',
+    'path' => 'logs',
+
+    'route_group_attributes' => [
+        'prefix' => env('WEB_LOGS_PATH', 'web-logs'),
+        'middleware' => [
+            // 'web',
+            Authorize::class,
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -39,5 +49,5 @@ return [
     |
     */
 
-    'lines_per_page' => env('WEB_LOGS_LINES_PER_PAGE', 1000)
+    'lines_per_page' => env('WEB_LOGS_LINES_PER_PAGE', 1000),
 ];

@@ -10,10 +10,7 @@
                         <div>
                             <div class="text-lg font-bold">{{ store.current.name }}</div>
                             <div class="hidden lg:grid grid-cols-2 lg:flex lg:space-x-5 text-sm font-bold text-gray-500 py-1">
-                                <div>Created
-                                    <date :timestamp="store.current.created_at"/>
-                                </div>
-                                <div>Modified
+                                <div>Last Modified:
                                     <date :timestamp="store.current.modified_at"/>
                                 </div>
                                 <div>Size: {{ filesize(store.current.size) }}</div>

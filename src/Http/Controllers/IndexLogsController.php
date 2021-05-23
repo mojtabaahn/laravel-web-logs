@@ -13,8 +13,7 @@ class IndexLogsController
             return [
                 'name' => $fileInfo->getFilename(),
                 'size' => $fileInfo->getSize(),
-                'modified_at' => $fileInfo->getMTime(),
-                'created_at' => $fileInfo->getCTime(),
+                'modified_at' => $fileInfo->getMTime()
             ];
         })->toArray();
     }

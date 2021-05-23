@@ -17,7 +17,6 @@
         "lodash": "^4.17.21",
         "postcss": "^8.2.15",
         "tailwindcss": "^2.1.2",
-        "utf8": "^3.0.0",
         "vue": "^3.0.0"
     },
     "devDependencies": {

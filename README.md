@@ -8,8 +8,9 @@
 ![Packagist Downloads](https://img.shields.io/packagist/dt/mojtabaahn/laravel-web-logs?style=for-the-badge)
 
 ## Disclaimer
-This package is not by any means a replacement for error tracking software such as [Sentry](https://sentry.io/) and [Bugsnag](https://www.bugsnag.com/) or debugging tools like [Ray](https://myray.app/) and [Xdebug](https://xdebug.org/).
-It is simply web interface for laravel/lumen file-based logs.
+This package is simply a lightweight web interface for Laravel and Lumen file-based logs.
+If you need an advanced debugging tool consider trying [Telescope](https://laravel.com/docs/8.x/telescope), [Debugbar](https://github.com/barryvdh/laravel-debugbar), [Clockwork](https://github.com/itsgoingd/clockwork) or [Ray](https://myray.app/)
+And if you need an error tracking software consider tring [Sentry](https://sentry.io/) and [Bugsnag](https://www.bugsnag.com/).
 
 ## Live Preview
 Visit [Here](https://web-logs.snowthen.ir/web-logs) to preview online playground.
@@ -22,13 +23,9 @@ You can install the package via composer:
 composer require mojtabaahn/laravel-web-logs
 ```
 
-publish the assets with:
-```bash
-php artisan vendor:publish --provider="Mojtabaahn\LaravelWebLogs\Providers\LaravelWebLogsServiceProvider" --tag="web-logs-assets"
-```
+And it's done.
+You can optionally publish the config file with:
 
-
-You can optianally publish the config file with:
 ```bash
 php artisan vendor:publish --provider="Mojtabaahn\LaravelWebLogs\Providers\LaravelWebLogsServiceProvider" --tag="config"
 ```
@@ -36,6 +33,8 @@ php artisan vendor:publish --provider="Mojtabaahn\LaravelWebLogs\Providers\Larav
 This is the contents of the published config file:
 
 ```php
+use Mojtabaahn\LaravelWebLogs\Http\Middlewares\Authorize;
+
 return [
 
     /*
@@ -51,18 +50,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Dashboard Path
+    | Route Group Attributes
     |--------------------------------------------------------------------------
     |
-    | This is the URI path where Laravel Web Logs will be accessible from.
-    | Feel free to change this path to anything you like.
+    | This is the array configuring package route attributes. feel free
+    | to edit route prefixes, middlewares and anything else.
     |
-    | Note that the URI will not affect the paths of its internal API that
-    | aren't exposed to users.
+    | In case you want to add authorization using default auth driver,
+    | uncomment web middleware.
     |
     */
 
-    'path' => 'web-logs',
+    'route_group_attributes' => [
+        'prefix' => env('WEB_LOGS_PATH', 'web-logs'),
+        'middleware' => [
+            // 'web',
+            Authorize::class,
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -75,7 +80,7 @@ return [
     |
     */
 
-    'lines_per_page' => env('WEB_LOGS_LINES_PER_PAGE', 1000)
+    'lines_per_page' => env('WEB_LOGS_LINES_PER_PAGE', 1000),
 ];
 ```
 

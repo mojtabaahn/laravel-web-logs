@@ -2,9 +2,10 @@
 
 namespace Mojtabaahn\LaravelWebLogs\Providers;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Lumen\Routing\Router;
+use Mojtabaahn\LaravelWebLogs\Http\Controllers\AssetController;
 use Mojtabaahn\LaravelWebLogs\Http\Middlewares\Authorize;
 
 class LaravelWebLogsServiceProvider extends ServiceProvider
@@ -30,12 +31,15 @@ class LaravelWebLogsServiceProvider extends ServiceProvider
         /** @var Router $router */
         $router = $this->app->router;
 
-        $router->group([
-            'prefix' =>  config('web-logs.path'),
-            'middleware' => Authorize::class
-        ], function () use (&$router) {
+        $router->group(config('web-logs.route_group_attributes'), function () use (&$router) {
             return include __DIR__ . "/../../routes/api.php";
         });
+
+        if (app() instanceof \Illuminate\Foundation\Application) {
+            $router->get('web-logs/assets/{filename}', AssetController::class)->where('filename', '.*');
+        } else {
+            $router->get('web-logs/assets/{filename:.+}', AssetController::class);
+        }
 
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'web-logs');
 
