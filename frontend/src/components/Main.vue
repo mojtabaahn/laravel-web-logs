@@ -6,7 +6,7 @@
             </div>
             <div v-else>
                 <div class="sticky top-0 bg-white dark:bg-gray-900">
-                    <div class="p-5 border-b border-gray-200 dark:border-gray-700 grid lg:grid-cols-2 flex-wrap justify-between items-center">
+                    <div class="p-5 border-b border-gray-200 dark:border-gray-700 grid lg:grid-cols-3 flex-wrap justify-between items-center">
                         <div>
                             <div class="text-lg font-bold dark:text-gray-300">{{ store.current.name }}</div>
                             <div class="hidden lg:grid grid-cols-2 lg:flex lg:space-x-5 text-sm font-bold text-gray-500 py-1">
@@ -16,7 +16,7 @@
                                 <div>Size: {{ filesize(store.current.size) }}</div>
                             </div>
                         </div>
-                        <div class="w-full lg:auto flex space-right items-center lg:flex-row-reverse mt-3 lg:mt-0 flex-wrap -mb-3">
+                        <div class="w-full col-span-2 lg:auto flex space-right items-center lg:flex-row-reverse mt-3 lg:mt-0 flex-wrap -mb-3">
                             <!--<text-filter label="Links" :enabled="store.text_links" @click="store.toggle('text_links')"/>-->
                             <!--<text-filter label="Auto-Reload" :enabled="store.auto_reload" @click="store.toggle('auto_reload')"/>-->
                             <button
