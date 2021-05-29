@@ -1,4 +1,4 @@
-![screen shot](https://github.com/mojtabaahn/laravel-web-logs/blob/main/splash.jpg?raw=true)
+![Banner](https://github.com/mojtabaahn/laravel-web-logs/blob/main/banner.jpeg?raw=true)
 
 # View Laravel/Lumen logs in browser.
 
