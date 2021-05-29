@@ -28,8 +28,6 @@ return [
     |
     */
 
-    'path' => 'logs',
-
     'route_group_attributes' => [
         'prefix' => env('WEB_LOGS_PATH', 'web-logs'),
         'middleware' => [
