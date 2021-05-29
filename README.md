@@ -100,7 +100,8 @@ public function boot()
 ```
 
 ## Screen Shot
-![screen shot](https://github.com/mojtabaahn/laravel-web-logs/blob/main/screenshot.jpg?raw=true)
+![screen shot](https://github.com/mojtabaahn/laravel-web-logs/blob/main/screenshot-light.png?raw=true)
+![screen shot](https://github.com/mojtabaahn/laravel-web-logs/blob/main/screenshot-dark.png?raw=true)
 
 ## Future Plans
 - [x] Add option to auto-append new logs (like `tail -f`)
