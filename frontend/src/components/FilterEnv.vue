@@ -5,9 +5,9 @@
                 {{ label }}
             </button>
         </template>
-        <div class="bg-white rounded border border-gray-200 shadow-md w-[12rem] mt-[2px]">
-            <button @click.prevent="store.toggle_env(env)" v-for="env in store.envs" class="block w-full text-left capitalize px-3 py-2 cursor:bg-blue-50">
-                <i :class="store.env_is_checked(env) ? 'bxs-check-square text-blue-600' : 'bx-square'" class="bx relative top-[3px] text-xl mr-1"></i>
+        <div class="bg-white dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-700 shadow-md w-[12rem] mt-[2px]">
+            <button @click.prevent="store.toggle_env(env)" v-for="env in store.envs" class="block w-full text-left capitalize px-3 py-2 cursor:bg-blue-50 dark:cursor:bg-gray-700">
+                <i :class="store.env_is_checked(env) ? 'bxs-check-square text-blue-600 dark:text-blue-300' : 'bx-square'" class="bx relative top-[3px] text-xl mr-1"></i>
                 <span>{{ env }}</span>
             </button>
         </div>

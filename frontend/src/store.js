@@ -6,6 +6,7 @@ import {useLocalStorage} from "@vueuse/core";
 export default reactive({
     intervals: {},
     is_pulling: false,
+    color_scheme: useLocalStorage('color_scheme', 'auto'),
     pull_interval: useLocalStorage('pull_interval', config.default_pulling_interval),
     logs: [],
     loading_logs: false,
@@ -53,11 +54,46 @@ export default reactive({
         this.toggleArray(key, this.filter_levels)
     },
     async setup() {
+        this.setupColorScheme()
         await this.fetchLogs()
-        let log = this.current_name === '' ? this.sorted_logs[0] : this.logs.filter(log => log.name === this.current_name)[0]
-        await this.openLog(log)
+        if (this.current_name !== '') {
+            let log = this.logs.filter(log => log.name === this.current_name)[0]
+            await this.openLog(log)
+        }
         this.setupDateInterval()
         this.setupPullInterval()
+    },
+    toggleColorScheme() {
+        let browserInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (this.color_scheme === 'dark' && browserInDarkMode) {
+            this.color_scheme = 'light'
+        } else if (this.color_scheme === 'light' && browserInDarkMode) {
+            this.color_scheme = 'auto'
+        } else if (this.color_scheme === 'dark' && !browserInDarkMode) {
+            this.color_scheme = 'auto'
+        } else if (this.color_scheme === 'light' && !browserInDarkMode) {
+            this.color_scheme = 'dark'
+        } else if (this.color_scheme === 'auto' && browserInDarkMode) {
+            this.color_scheme = 'light'
+        } else if (this.color_scheme === 'auto' && !browserInDarkMode) {
+            this.color_scheme = 'dark'
+        }
+    },
+    get isDark() {
+        let browserInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let dark = (this.color_scheme === 'auto' && browserInDarkMode) || this.color_scheme === 'dark'
+        return dark
+    },
+    setupColorScheme() {
+        watch(() => this.color_scheme, scheme => {
+            let browserInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let dark = (scheme === 'auto' && browserInDarkMode) || scheme === 'dark'
+            if (dark) {
+                document.documentElement.classList.add('dark')
+            } else {
+                document.documentElement.classList.remove('dark')
+            }
+        }, {immediate: true})
     },
     setupPullInterval() {
         watch(() => this.pull_interval, pull_interval => {
@@ -72,7 +108,7 @@ export default reactive({
         }, {immediate: true})
     },
     async pullLog() {
-        if (this.current_name === null)
+        if (this.current_name === '')
             return
 
         if (this.is_pulling)

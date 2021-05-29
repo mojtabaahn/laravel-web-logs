@@ -1,6 +1,5 @@
 <template>
-    <div class="w-full h-screen">
-        <div class="h-[0rem] border-gray-200"></div>
+    <div class="w-full h-screen dark:bg-gray-900 dark:text-gray-200">
         <div class="flex" style="height: calc(100% - 0rem)">
             <Nav/>
             <Aside />
@@ -32,16 +31,3 @@ export default {
     }
 }
 </script>
-<style>
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    @apply bg-gray-100
-}
-
-::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 cursor:bg-gray-500
-}
-</style>

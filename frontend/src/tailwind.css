@@ -7,3 +7,37 @@
 *:focus {
     outline: none !important;
 }
+
+@layer base {
+    .form-textarea {
+        @apply rounded-lg dark:bg-gray-700 dark:text-gray-100 border border-gray-200 dark:border-gray-700 cursor:ring-blue-300 cursor:ring-2 cursor:border-blue-600 dark:cursor:ring-blue-300 p-3 w-full
+    }
+
+    .form-input:disabled {
+        @apply bg-gray-100
+    }
+
+    .form-input {
+        @apply rounded-lg dark:bg-gray-700 dark:text-gray-100 border border-gray-200 dark:border-gray-700 cursor:ring-2 cursor:ring-blue-500 dark:cursor:ring-blue-300 px-3 py-1
+    }
+
+    .form-submit {
+        @apply rounded-lg bg-blue-500 text-white font-bold px-5 py-2 cursor:bg-blue-600
+    }
+
+    .form-button {
+        @apply border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-200 cursor:bg-blue-50 dark:cursor:bg-gray-800 cursor:border-blue-600 dark:cursor:border-blue-300 cursor:text-blue-600 dark:cursor:text-blue-300 px-3 py-1
+    }
+
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-gray-100 dark:bg-gray-800
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-gray-300 dark:bg-gray-600 cursor:bg-gray-500
+    }
+}

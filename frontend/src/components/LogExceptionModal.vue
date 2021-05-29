@@ -23,24 +23,3 @@ export default defineComponent({
     }
 })
 </script>
-<style>
-.form-textarea {
-    @apply rounded-lg border border-gray-200 cursor:ring-blue-300 cursor:ring-2 cursor:border-blue-600 p-3 w-full
-}
-
-.form-input:disabled {
-    @apply bg-gray-100
-}
-
-.form-input {
-    @apply rounded-lg border border-gray-200 cursor:ring-blue-300 cursor:ring-2 cursor:border-blue-600 px-3 py-1
-}
-
-.form-submit {
-    @apply rounded-lg bg-blue-500 text-white font-bold px-5 py-2 cursor:bg-blue-600
-}
-
-.form-button{
-    @apply border border-gray-300 rounded-lg text-gray-700 cursor:bg-blue-50 cursor:border-blue-600 cursor:text-blue-600 px-3 py-1
-}
-</style>

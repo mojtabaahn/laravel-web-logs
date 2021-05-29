@@ -35,6 +35,9 @@ class AssetController
         if (Str::endsWith($filename, '.css')) {
             return 'text/css';
         }
+        if (Str::endsWith($filename, '.svg')) {
+            return 'image/svg+xml';
+        }
 
         return 'text/plain';
     }

@@ -2,13 +2,13 @@
     <div :class="store.aside ? 'hidden lg:block' : ''" class="flex-grow h-full">
         <infinite-scroll @scroll-to-end="!store.is_end && store.fetchLogNextPage()" class="overflow-auto relative" style="height:calc(100%)">
             <div v-if="store.current === null" class="flex items-center justify-center w-full h-full">
-                <div class="text-gray-300 text-4xl font-light">Select a log..</div>
+                <div class="text-gray-300 dark:text-gray-500 text-4xl font-light">Select A Log..</div>
             </div>
             <div v-else>
-                <div class=" sticky top-0 bg-white">
-                    <div class="p-5 border-b border-gray-200 grid lg:grid-cols-2 flex-wrap justify-between items-center">
+                <div class="sticky top-0 bg-white dark:bg-gray-900">
+                    <div class="p-5 border-b border-gray-200 dark:border-gray-700 grid lg:grid-cols-2 flex-wrap justify-between items-center">
                         <div>
-                            <div class="text-lg font-bold">{{ store.current.name }}</div>
+                            <div class="text-lg font-bold dark:text-gray-300">{{ store.current.name }}</div>
                             <div class="hidden lg:grid grid-cols-2 lg:flex lg:space-x-5 text-sm font-bold text-gray-500 py-1">
                                 <div>Last Modified:
                                     <date :timestamp="store.current.modified_at"/>
@@ -36,16 +36,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-5 divide-y divide-dashed divide-gray-200">
+                <div class="p-5 divide-y divide-dashed divide-gray-200 dark:divide-gray-700">
                     <div v-for="(line,offset) in store.sorted_content" class="py-4">
                         <div class="font-bold text-sm inline-flex space-x-4 mb">
-                            <div class="px-2 py-1  border rounded-lg" :class="levelClass(line.level)">{{ line.level }}</div>
-                            <div class="py-1 text-gray-700 capitalize">{{ line.env }}</div>
-                            <date class="py-1 text-gray-700" :timestamp="line.time" :parse="true"/>
+                            <div class="px-2 py-1 border rounded-lg" :class="levelClass(line.level)">{{ line.level }}</div>
+                            <div class="py-1 text-gray-700 dark:text-gray-500 capitalize">{{ line.env }}</div>
+                            <date class="py-1 text-gray-700 dark:text-gray-500" :timestamp="line.time" :parse="true"/>
                         </div>
                         <div class="whitespace-pre-wrap font-mono with-links leading-6 py-4 break-all" v-html="store.applyFilters(line.content)"></div>
                         <template v-if="line.trace !== ''">
-                            <button @click="store.toggleTrace(offset)" class="rounded-lg px-2 py-1 font-bold text-sm text-blue-500 cursor:text-blue-600 underline">Toggle Trace</button>
+                            <button @click="store.toggleTrace(offset)" class="rounded-lg px-2 py-1 font-bold text-sm text-blue-500 dark:text-blue-400 cursor:text-blue-600 dark:cursor:text-blue-300 underline">Toggle Trace</button>
                             <!--                            <div class="whitespace-pre-wrap font-mono with-links leading-6 mt-2" v-if="store.traceIsOpen(offset)">{{ line.trace }}</div>-->
                             <div v-if="store.traceIsOpen(offset)" class="mt-4">
                                 <div class="font-mono">
@@ -92,8 +92,8 @@ export default defineComponent({
             let isError = level.includes('EMERGENCY') | level.includes('ALERT') | level.includes('CRITICAL') | level.includes('ERROR');
             let isDebug = level.includes('WARNING') | level.includes('NOTICE') | level.includes('INFO') | level.includes('DEBUG');
             return {
-                'bg-red-100 text-red-600 border-red-600': isError,
-                'bg-yellow-100 text-yellow-600 border-yellow-600': isDebug,
+                'bg-red-100 dark:bg-red-300 text-red-600 dark:text-red-700 border-red-600 dark:border-red-300': isError,
+                'bg-yellow-100 dark:bg-yellow-200 text-yellow-600 dark:text-yellow-800 border-yellow-600 dark:border-yellow-300': isDebug,
             }
         }
     }
