@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="icon" href="/vendor/web-logs/favicon.ico">
+    <link rel="icon" href="/web-logs/assets/favicon-32x32.png">
     <title>Laravel Web Logs</title>
     <script>
         window.backend_base_url = '{{url(config('web-logs.route_group_attributes.prefix'))}}'
