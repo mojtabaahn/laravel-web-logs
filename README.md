@@ -15,6 +15,9 @@ And if you need an error tracking software consider tring [Sentry](https://sentr
 ## Live Preview
 Visit [Here](https://web-logs.snowthen.ir/web-logs) to preview online playground.
 
+## Screen Shot
+![screen shot](https://raw.githubusercontent.com/mojtabaahn/laravel-web-logs/main/screenshot.png?raw=true)
+
 ## Installation
 
 You can install the package via composer:
@@ -98,10 +101,6 @@ public function boot()
     });
 }
 ```
-
-## Screen Shot
-![screen shot](https://github.com/mojtabaahn/laravel-web-logs/blob/main/screenshot-light.png?raw=true)
-![screen shot](https://github.com/mojtabaahn/laravel-web-logs/blob/main/screenshot-dark.png?raw=true)
 
 ## Future Plans
 - [x] Add option to auto-append new logs (like `tail -f`)
