@@ -108,7 +108,10 @@ public function boot()
 - [x] Lazy-load/Infinite-scroll for big files
 - [x] Add guard for accessing routes
 - [x] Move stores to [Pinia](https://pinia.esm.dev/)
-
+- [ ] Add tests
+- [ ] Support nested logs (logs in subdirectories)
+- [ ] Add [Day.js](https://day.js.org/) and time-zone support
+- [ ] Add global search option using grep or other fast search methods
 
 ## Changelog
 
