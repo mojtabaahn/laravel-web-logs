@@ -29,6 +29,10 @@
         @apply border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-200 cursor:bg-blue-50 dark:cursor:bg-gray-800 cursor:border-blue-600 dark:cursor:border-blue-300 cursor:text-blue-600 dark:cursor:text-blue-300 px-3 py-1
     }
 
+    .form-cancel {
+        @apply rounded-lg font-bold px-5 py-2 text-gray-700 mr-4
+    }
+
     ::-webkit-scrollbar {
         width: 8px;
     }
