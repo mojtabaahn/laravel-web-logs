@@ -27,11 +27,16 @@
 </template>
 <script>
 import {defineComponent} from "vue";
+import {useStore} from "../store";
 
-export default defineComponent({})
+export default defineComponent({
+  setup() {
+    return {store: useStore()}
+  }
+})
 </script>
 <style>
-.nav-action{
+.nav-action {
   @apply text-gray-700 dark:text-gray-400 cursor:text-blue-600 dark:cursor:text-blue-300
 }
 </style>

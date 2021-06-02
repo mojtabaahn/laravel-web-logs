@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="root">
     <div ref="trigger">
       <slot name="trigger" v-bind="{toggle}"></slot>
     </div>
@@ -9,42 +9,35 @@
   </div>
 </template>
 <script>
-import {defineComponent} from "vue";
+import {defineComponent, onUnmounted, onMounted, watch, ref} from "vue";
 import {createPopper} from "@popperjs/core";
 
 export default defineComponent({
   name: 'popper',
-  props : {
-    position : {
-      default : 'bottom'
+  props: {
+    position: {
+      default: 'bottom'
     }
   },
-  data: v => ({
-    visible: false,
-  }),
-  created() {
-    this.toggle = () => this.visible = !this.visible
-    this.documentClickCallback = ev => {
-      if (ev.target !== this.$el && !this.$el.contains(ev.target)) {
-        this.visible = false
-      }
-    }
-  },
-  watch: {
-    visible: {
-      handler(value) {
-        value && createPopper(this.$refs.trigger, this.$refs.menu, {
-          placement: this.position
-        })
-      },
-      immediate: true
-    },
-  },
-  mounted() {
-    document.addEventListener('click', this.documentClickCallback);
-  },
-  unmounted() {
-    document.removeEventListener('click', this.documentClickCallback)
+  setup(props, context) {
+    let root = ref(null)
+    let trigger = ref(null)
+    let menu = ref(null)
+    let visible = ref(false)
+    let toggle = () => visible.value = !visible.value
+    let documentClickCallback = ev => (root.value && ev.target !== root.value && !root.value.contains(ev.target)) && (visible.value = false)
+
+    onMounted(() => document.addEventListener('click', documentClickCallback))
+    onUnmounted(() => document.removeEventListener('click', documentClickCallback))
+    onMounted(() => watch(
+        visible,
+        value => value && createPopper(trigger.value, menu.value, {
+          placement: props.position
+        }),
+        {immediate: true}
+    ))
+
+    return {visible, toggle, trigger, menu, root}
   }
 })
 </script>
