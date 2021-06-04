@@ -21,12 +21,6 @@ class LaravelWebLogsServiceProvider extends ServiceProvider
                 __DIR__ . '/../../public' => base_path('public/vendor/web-logs'),
             ], 'web-logs-assets');
         }
-    }
-
-    public function register()
-    {
-
-        $this->mergeConfigFrom(__DIR__ . '/../../config/web-logs.php', 'web-logs');
 
         /** @var Router $router */
         $router = $this->app->router;
@@ -40,6 +34,13 @@ class LaravelWebLogsServiceProvider extends ServiceProvider
         } else {
             $router->get('web-logs/assets/{filename:.+}', AssetController::class);
         }
+
+    }
+
+    public function register()
+    {
+
+        $this->mergeConfigFrom(__DIR__ . '/../../config/web-logs.php', 'web-logs');
 
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'web-logs');
 
