@@ -16,12 +16,6 @@ class LaravelWebLogsServiceProvider extends ServiceProvider
             __DIR__ . '/../../config/web-logs.php' => base_path('config/web-logs.php'),
         ], 'config');
 
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                __DIR__ . '/../../public' => base_path('public/vendor/web-logs'),
-            ], 'web-logs-assets');
-        }
-
         /** @var Router $router */
         $router = $this->app->router;
 
