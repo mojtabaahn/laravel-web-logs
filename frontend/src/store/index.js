@@ -183,13 +183,21 @@ export const useStore = defineStore({
             if (this.text_links) {
                 text = linkifyStr(text)
             }
-
-            text = text.replaceAll(/([a-zA-Z0-9\\\/\-_\.]+\/)([a-zA-Z0-9\\\-_]+\.(php))/g, "<span class='is-file' title='$1$2'>$2</span>")
+            
+            const replaceCallback = (match, path, filename, extension, line) => {
+                let uri = `phpstorm://open?file=${path}${filename}`;
+                if (line) {
+                    uri += `&line=${line}`;
+                }
+                return `<a class="is-file" title="${path}${filename}" href="${uri}">${filename}</a>`;
+            }
+            text = text.replaceAll(/([a-zA-Z0-9\\\/\-_\.]+\/)([a-zA-Z0-9\\\-_]+\.(php))[:(]?([0-9]+)?/g, replaceCallback)
+            //text = text.replaceAll(/([a-zA-Z0-9\\\/\-_\.]+\/)([a-zA-Z0-9\\\-_]+\.(php))/g, "<span class='is-file' title='$1$2'>$2</span>")
 
             // text = text.replaceAll(/([a-zA-Z0-9_]+(\-\>|\:\:)[a-zA-Z0-9_\{\}]+)\(/g, "<span class='is-method'>$1</span>")
             text = text.replaceAll(/\\?([a-zA-Z0-9_]+\\{2})+([a-zA-Z0-9_]+)/g, "<span title='$1$2' class='is-class'>$2</span>")
 
-            text = text.replaceAll(/([0-9]+)/g, "<span class='is-number'>$1</span>")
+            text = text.replaceAll(/(?<!&line=\d*)([0-9]+)/g, "<span class='is-number'>$1</span>")
 
             return text
         },
