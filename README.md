@@ -15,6 +15,9 @@ And if you need an error tracking software consider tring [Sentry](https://sentr
 ## Live Preview
 Visit [Here](https://web-logs.snowthen.ir/web-logs) to preview online playground.
 
+## Usage
+Visit the `web-logs/` route use the package. You can change this in the config file.
+
 ## Screen Shot
 ![screen shot](https://raw.githubusercontent.com/mojtabaahn/laravel-web-logs/main/screenshot.png?raw=true)
 
