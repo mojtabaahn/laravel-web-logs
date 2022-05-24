@@ -9,15 +9,11 @@
     <script>
         window.backend_base_url = '{{url(config('web-logs.route_group_attributes.prefix'))}}'
     </script>
-    <script defer="defer" src="{{web_logs_asset('js/chunk-vendors.js')}}" type="module"></script>
-    <script defer="defer" src="{{web_logs_asset('js/app.js')}}" type="module"></script>
-    <link href="{{web_logs_asset('css/chunk-vendors.css')}}" rel="stylesheet">
-    <link href="{{web_logs_asset('css/app.css')}}" rel="stylesheet">
-    <script defer="defer" src="{{web_logs_asset('js/chunk-vendors-legacy.js')}}" nomodule></script>
-    <script defer="defer" src="{{web_logs_asset('js/app-legacy.js')}}" nomodule></script>
+    <link rel="stylesheet" href="{{asset(mix('css/app.css','vendor/web-logs'))}}">
 </head>
 <body>
 <noscript><strong>We're sorry but app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript>
 <div id="app"></div>
+<script src="{{asset(mix('js/app.js','vendor/web-logs'))}}"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@
 ## Disclaimer
 This package is simply a lightweight web interface for Laravel and Lumen file-based logs.
 If you need an advanced debugging tool consider trying [Telescope](https://laravel.com/docs/8.x/telescope), [Debugbar](https://github.com/barryvdh/laravel-debugbar), [Clockwork](https://github.com/itsgoingd/clockwork) or [Ray](https://myray.app/)
-And if you need an error tracking software consider tring [Sentry](https://sentry.io/) and [Bugsnag](https://www.bugsnag.com/).
+And if you need an error tracking software consider trying [Sentry](https://sentry.io/) and [Bugsnag](https://www.bugsnag.com/).
 
 ## Live Preview
 Visit [Here](https://web-logs.snowthen.ir/web-logs) to preview online playground.
@@ -77,16 +77,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Lines Per Page
+    | Chunk Size
     |--------------------------------------------------------------------------
     |
-    | On each request from dashboard to it's back-end how many lines should
+    | On each request from dashboard to it's back-end how many logs should
     | it read of specified log file. Setting this option to a big number
     | may reduce dashboard performance!
     |
     */
 
-    'lines_per_page' => env('WEB_LOGS_LINES_PER_PAGE', 1000),
+    'chunk_size' => env('WEB_LOGS_CHUNK_SIZE', 10),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Search Path
+    |--------------------------------------------------------------------------
+    |
+    | Use this property to customize logs directory where package should
+    | look for log files.
+    |
+    */
+
+    'search_path' => storage_path('logs'),
 ];
 ```
 
@@ -104,16 +116,6 @@ public function boot()
     });
 }
 ```
-
-## Future Plans
-- [x] Add option to auto-append new logs (like `tail -f`)
-- [x] Lazy-load/Infinite-scroll for big files
-- [x] Add guard for accessing routes
-- [x] Move stores to [Pinia](https://pinia.esm.dev/)
-- [ ] Add tests
-- [ ] Support nested logs (logs in subdirectories)
-- [ ] Add [Day.js](https://day.js.org/) and time-zone support
-- [ ] Add global search option using grep or other fast search methods
 
 ## Changelog
 
