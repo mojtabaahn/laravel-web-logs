@@ -7,7 +7,7 @@
     <link rel="icon" href="/web-logs/assets/favicon-32x32.png">
     <title>Laravel Web Logs</title>
     <script>
-        window.BASE_API_URL = '{{url(config('web-logs.route_group_attributes.prefix'))}}'
+        window.BASE_API_URL = '{{url(config('web-logs.route_group_attributes.prefix'))}}/api'
     </script>
     <link rel="stylesheet" href="{{asset(mix('css/app.css','vendor/web-logs'))}}">
 </head>
