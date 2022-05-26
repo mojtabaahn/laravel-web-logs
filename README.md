@@ -15,9 +15,6 @@ And if you need an error tracking software consider trying [Sentry](https://sent
 ## Live Preview
 Visit [Here](https://web-logs.snowthen.ir/web-logs) to preview online playground.
 
-## Usage
-Visit the `web-logs/` route use the package. You can change this in the config file.
-
 ## Screen Shot
 ![screen shot](https://raw.githubusercontent.com/mojtabaahn/laravel-web-logs/main/screenshot.png?raw=true)
 
@@ -29,13 +26,21 @@ You can install the package via composer:
 composer require mojtabaahn/laravel-web-logs
 ```
 
-And it's done.
-You can optionally publish the config file with:
+Now publish package assets using this command:
 
+```bash
+php artisan vendor:publish --tag="web-logs-assets"
+```
+
+Optionally, you can publish the config file of the package.
 ```bash
 php artisan vendor:publish --provider="Mojtabaahn\LaravelWebLogs\Providers\LaravelWebLogsServiceProvider" --tag="config"
 ```
 
+## Usage
+Visit the `web-logs/` route use the package. You can change this in the config file.
+
+## Configuration
 This is the contents of the published config file:
 
 ```php
