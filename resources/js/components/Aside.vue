@@ -21,7 +21,7 @@
             <span class="block text-gray-500">{{ file.modifiedAt.toLocaleString() }}</span>
           </button>
         </div>
-        <StatusBar />
+        <StatusBar/>
       </div>
     </template>
   </div>
@@ -30,17 +30,15 @@
 import Loading from "./Loading";
 import {useLogsStore} from "../store/logs";
 import StatusBar from "./StatusBar";
+import {storeToRefs} from "pinia";
 
 export default {
   components: {StatusBar, Loading},
   setup() {
     let store = useLogsStore();
-    return {
-      files: store.files,
-      selectFile: store.selectFile,
-      searchFiles: store.searchFiles,
-      reload : store.reload,
-    }
+    const {files} = storeToRefs(store)
+    const {selectFile, searchFiles, reload} = store
+    return {files, selectFile, searchFiles, reload}
   },
 }
 </script>
