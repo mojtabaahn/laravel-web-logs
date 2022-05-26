@@ -19,16 +19,29 @@
     "autoload": {
         "psr-4": {
             "Mojtabaahn\\LaravelWebLogs\\": "./src"
-        },
-        "files": [
-            "./src/helpers.php"
-        ]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mojtabaahn\\LaravelWebLogs\\Tests\\": "tests"
+        }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Mojtabaahn\\LaravelWebLogs\\Providers\\LaravelWebLogsServiceProvider"
+                "Mojtabaahn\\LaravelWebLogs\\WebLogsProvider"
             ]
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "post-autoload-dump": [
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ]
+    },
+    "prefer-stable": true,
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "orchestra/testbench": "^7.0"
     }
 }

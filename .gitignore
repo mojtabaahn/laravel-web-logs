@@ -3,3 +3,5 @@
 docker-compose.yml
 Dockerfile
 Makefile
+node_modules
+*.cache

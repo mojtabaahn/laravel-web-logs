@@ -38,14 +38,26 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Lines Per Page
+    | Chunk Size
     |--------------------------------------------------------------------------
     |
-    | On each request from dashboard to it's back-end how many lines should
+    | On each request from dashboard to it's back-end how many logs should
     | it read of specified log file. Setting this option to a big number
     | may reduce dashboard performance!
     |
     */
 
-    'lines_per_page' => env('WEB_LOGS_LINES_PER_PAGE', 1000),
+    'chunk_size' => env('WEB_LOGS_CHUNK_SIZE', 10),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Search Path
+    |--------------------------------------------------------------------------
+    |
+    | Use this property to customize logs directory where package should
+    | look for log files.
+    |
+    */
+
+    'search_path' => storage_path('logs'),
 ];
