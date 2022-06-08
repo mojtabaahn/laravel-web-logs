@@ -12,9 +12,6 @@ This package is simply a lightweight web interface for Laravel and Lumen file-ba
 If you need an advanced debugging tool consider trying [Telescope](https://laravel.com/docs/8.x/telescope), [Debugbar](https://github.com/barryvdh/laravel-debugbar), [Clockwork](https://github.com/itsgoingd/clockwork) or [Ray](https://myray.app/)
 And if you need an error tracking software consider trying [Sentry](https://sentry.io/) and [Bugsnag](https://www.bugsnag.com/).
 
-## Live Preview
-Visit [Here](https://web-logs.snowthen.ir/web-logs) to preview online playground.
-
 ## Screen Shot
 ![screen shot](https://raw.githubusercontent.com/mojtabaahn/laravel-web-logs/main/screenshot.png?raw=true)
 
@@ -121,19 +118,6 @@ public function boot()
     });
 }
 ```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
-
-## Credits
-
-- [Mojtabaa H.N.](https://github.com/mojtabaahn)
-- [All Contributors](../../contributors)
 
 ## License
 
